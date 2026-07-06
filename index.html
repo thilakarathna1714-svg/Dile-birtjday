@@ -2,88 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Happy Birthday Dile! ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Dile! 🌸✨</title>
     <style>
         * { box-sizing: border-box; }
         body, html { 
-            margin: 0; padding: 0; background-color: #050505; 
+            margin: 0; padding: 0; background-color: #fff0f5; 
             display: flex; justify-content: center; align-items: center; 
-            height: 100vh; width: 100vw; overflow: hidden; color: white; 
+            height: 100vh; width: 100vw; overflow: hidden; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         }
-        .media-container { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: 1; display: flex; justify-content: center; align-items: center; background-color: #000;
+        .click-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center; cursor: pointer; transition: opacity 0.5s ease;
         }
-        .slide { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
-        .slide img, .slide video { width: 100%; height: 100%; object-fit: contain; filter: brightness(0.5) contrast(1.1); }
-        .active-photo img { animation: slowMoveEffect 8s ease-in-out infinite alternate; }
-        @keyframes slowMoveEffect { 0% { transform: scale(1); } 100% { transform: scale(1.06); } }
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 90%); z-index: 2; pointer-events: none; }
-        .header-content { position: absolute; top: 6%; display: flex; flex-direction: column; align-items: center; z-index: 3; text-align: center; width: 100%; }
-        .heart { width: 45px; height: 45px; background-color: #ff3366; position: relative; transform: rotate(-45deg); animation: beat 0.8s infinite alternate; box-shadow: 0 0 25px #ff3366; margin-bottom: 15px; }
-        .heart:before, .heart:after { content: ""; width: 45px; height: 45px; background-color: #ff3366; border-radius: 50%; position: absolute; }
-        .heart:before { top: -22.5px; left: 0; } .heart:after { top: 0; left: 22.5px; }
-        @keyframes beat { 0% { transform: scale(0.9) rotate(-45deg); } 100% { transform: scale(1.1) rotate(-45deg); } }
-        h1 { font-size: 2.5em; margin: 0; text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9), 0 0 20px #ff3366; font-weight: 700; letter-spacing: 1px; }
-        .story-container { position: absolute; bottom: 8%; width: 90%; max-width: 650px; text-align: center; z-index: 3; display: flex; justify-content: center; align-items: center; }
-        .story-text { font-size: 1.4em; font-weight: 400; color: #fff0f5; text-shadow: 0 0 10px rgba(255, 51, 102, 0.6), 0 2px 12px rgba(0, 0, 0, 0.9); line-height: 1.5; background: rgba(15, 15, 15, 0.85); padding: 15px 30px; border-radius: 25px; border: 2px solid #ff3366; box-shadow: 0 0 20px rgba(255, 51, 102, 0.4); animation: glowFadeIn 1.2s ease-in-out; width: 100%; }
-        @keyframes glowFadeIn { from { opacity: 0; transform: translateY(15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .ending-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; z-index: 4; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .emoji-build { font-size: 6em; animation: bounceEmoji 1.5s infinite alternate, scaleUp 2s ease-out; margin-bottom: 20px; text-shadow: 0 0 30px rgba(255,204,0,0.6); }
-        @keyframes scaleUp { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes bounceEmoji { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
-        .thank-you-msg { font-size: 2.2em; font-weight: 600; color: #ffffff; text-shadow: 0 0 20px #ff3366, 0 2px 10px rgba(0,0,0,0.5); animation: fadeInUp 2.5s ease-out; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .click-overlay h2 { font-size: 1.8em; text-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-bottom: 10px; padding: 0 15px; }
+        .click-overlay p { font-size: 1.1em; background: rgba(255,255,255,0.3); padding: 10px 20px; border-radius: 20px; margin: 0 15px; }
+        .bounce-heart { font-size: 4em; animation: bounce 1s infinite alternate; margin-bottom: 15px; }
+        @keyframes bounce { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
+
+        .media-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; display: flex; justify-content: center; align-items: center; background: #fff5f7; }
+        .slide { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; justify-content: center; align-items: center; }
+        .slide img, .slide video { width: 100%; height: 100%; object-fit: contain; filter: contrast(115%) saturate(145%) brightness(102%); }
+
+        .floating-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 2; overflow: hidden; }
+        .heart-bubble { position: absolute; bottom: -10%; background: rgba(255, 182, 193, 0.6); border-radius: 50%; animation: floatUp 6s infinite linear; }
+        @keyframes floatUp { 0% { transform: translateY(0) scale(0.5); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-110vh) scale(1.2); opacity: 0; } }
+
+        .header-content { position: absolute; top: 5%; display: flex; flex-direction: column; align-items: center; z-index: 3; text-align: center; width: 100%; }
+        .header-card { background: rgba(255, 255, 255, 0.85); padding: 8px 20px; border-radius: 30px; box-shadow: 0 8px 20px rgba(255, 105, 180, 0.15); border: 2px solid #ffb6c1; }
+        h1 { font-size: 1.6em; margin: 0; color: #ff477e; font-weight: 700; }
+
+        .story-container { position: absolute; bottom: 8%; width: 90%; max-width: 600px; text-align: center; z-index: 3; }
+        .story-text { font-size: 1.2em; font-weight: 500; color: #ff477e; line-height: 1.5; background: rgba(255, 255, 255, 0.95); padding: 15px 20px; border-radius: 20px; border: 3px dashed #ffb6c1; box-shadow: 0 10px 25px rgba(255, 105, 180, 0.15); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 100%; }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .ending-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); z-index: 4; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .ending-card { background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 3px solid #ffffff; max-width: 85%; }
+        .big-emoji { font-size: 4em; animation: swing 2s infinite ease-in-out; }
+        @keyframes swing { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+        .thank-you-msg { font-size: 1.6em; font-weight: 700; color: #ff477e; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <!-- Beautiful & High-Quality Cinematic Romantic Violin + Piano Background Track -->
-    <audio id="bg-music" src="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-493.mp3" loop></audio>
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+    <div id="starter-overlay" class="click-overlay" onclick="startSurprise()">
+        <div class="bounce-heart">💝</div>
+        <h2>Dile වෙනුවෙන් සකස් කරපු Surprise එක!</h2>
+        <p>සින්දුවත් එක්කම ලස්සනට බලන්න මෙතන Click කරන්න ✨</p>
+    </div>
 
     <div class="media-container">
-        <div class="slide"><video id="intro-video" src="file:///C:/Users/TUF/Downloads/video_2026-07-06_21-39-03.mp4" muted playsinline></video></div>
-        <div class="slide active-photo"><img src="file:///C:/Users/TUF/Downloads/photo_2026-07-06_21-30-32 (2).jpg"></div>
-        <div class="slide active-photo"><img src="file:///C:/Users/TUF/Downloads/photo_2026-07-06_21-30-32.jpg"></div>
-        <div class="slide active-photo"><img src="file:///C:/Users/TUF/Downloads/photo_2026-07-06_21-30-31 (2).jpg"></div>
-        <div class="slide active-photo"><img src="file:///C:/Users/TUF/Downloads/photo_2026-07-06_21-30-31.jpg"></div>
-        <div class="slide active-photo"><img src="file:///C:/Users/TUF/Downloads/photo_2026-07-06_21-30-30.jpg"></div>
-        <div class="slide active-photo"><img src="file:///C:/Users/TUF/Downloads/photo_2026-07-06_21-30-29.jpg"></div>
-        <div class="slide active-photo"><img src="file:///D:/downlods/IMG_2315.JPG"></div>
-        <div class="slide active-photo"><img src="file:///D:/downlods/IMG_2316.JPG"></div>
-        <div class="slide active-photo"><img src="file:///D:/photos/BD/PXL_20260306_053013517.PORTRAIT~2.jpg"></div>
-        <div class="slide active-photo"><img src="file:///D:/photos/BD/PXL_20260306_053245785.PORTRAIT~2.jpg"></div>
-        <div class="slide active-photo"><img src="file:///D:/photos/BD/PXL_20260306_060254045.PORTRAIT~2.jpg"></div>
+        <!-- Exactly mapped with your real GitHub file names -->
+        <div class="slide"><video id="intro-video" src="video_2026-07-06_21-39-03.mp4" muted playsinline></video></div>
+        <div class="slide"><img src="photo_2026-07-06_21-30-29.jpg"></div>
+        <div class="slide"><img src="photo_2026-07-06_21-30-30.jpg"></div>
+        <div class="slide"><img src="photo_2026-07-06_21-30-31.jpg"></div>
+        <div class="slide"><img src="photo_2026-07-06_21-30-31 (2).jpg"></div>
+        <div class="slide"><img src="photo_2026-07-06_21-30-32.jpg"></div>
+        <div class="slide"><img src="photo_2026-07-06_21-30-32 (2).jpg"></div>
+        <div class="slide"><img src="PXL_20260306_053013517.PORTRAIT~2.jpg"></div>
+        <div class="slide"><img src="PXL_20260306_053245785.PORTRAIT~2.jpg"></div>
+        <div class="slide"><img src="PXL_20260306_060254045.PORTRAIT~2.jpg"></div>
+        <div class="slide"><img src="IMG_2315.JPG"></div>
+        <div class="slide"><img src="IMG_2315 - Copy.JPG"></div>
     </div>
     
-    <div class="overlay"></div>
+    <div class="floating-bg" id="bubble-deck"></div>
 
     <div class="header-content">
-        <div class="heart"></div>
-        <h1>Happy Birthday Dile! ❤️</h1>
+        <div class="header-card">
+            <h1>Happy Birthday Dile! 🌸✨</h1>
+        </div>
     </div>
 
     <div class="story-container">
-        <div id="story-display" class="story-text">Screen එක උඩ එකපාරක් Click කරන්න... ✨</div>
+        <div id="story-display" class="story-text">Loading...</div>
     </div>
 
     <div id="ending" class="ending-screen">
-        <div class="emoji-build">🥰</div>
-        <div class="thank-you-msg">Thank You For Everything, My Love! ❤️</div>
+        <div class="ending-card">
+            <div class="big-emoji">🥰👸🌸</div>
+            <div class="thank-you-msg">Thank You For Everything, My Love! ❤️</div>
+            <p style="color: #ff7597; font-weight: bold; margin-top: 10px;">උපන්දිනයක් වේවා මගේ පණ! 🎂</p>
+        </div>
     </div>
 
     <script>
         const loveStory = [
-            "මුළු ලෝකයම නිහඬ වුණු මොහොතක, ඔයා මගේ ජීවිතයට ආවා... ✨",
+            "मुළු ලෝකයම නිහඬ වුණු මොහොතක, ඔයා මගේ ජීවිතයට ආවා... ✨",
             "ඔයාගේ ඔය ලස්සන hිනාව තමයි මගේ හැම දවසකම සතුට...",
             "සෑම පින්තූරයකම තියෙන්නේ අපි එකතු කරපු ආදරණීය මතකයන්...",
             "ජීවිතේ මට ලැබුණු වටිනාම සහ ලස්සනම තෑග්ග ඔයා විතරයි, Dile...",
             "ඔයා මගේ ළඟින් ඉන්න හැම තත්පරයක්ම මට මාරම විශේෂයි...",
             "කවදාවත් කාටවත්ම වෙනස් කරන්න බැරි තරම් මම ඔයාට ආදරෙයි...",
             "මගේ හුස්ම වැටෙන හැම වාරයක් පාසාම මම ඔයාවම පතනවා...",
-            "අපි ආපු මේ දුර දිහා බලද්දී hිතට දැනෙන්නේ පුදුමාකාර සතුටක්...",
-            "ඔයා නැති ලෝකයක් ගැන මට හිතන්නවත් බැරි තරම් ඔයා මගේ වෙලා...",
+            "අපි ආපු මේ දුර දිහා බලද්දී හිතට දැනෙන්නේ පුදුමාකාර සතුටක්...",
+            "ඔයා නැති ලෝකයක් ගැන මට hිතන්නවත් බැරි තරම් ඔයා මගේ වෙලා...",
             "හැමදාම ඔහොම මගේම වෙලා මගේ හෙවනැල්ල වගේ ළඟින් ඉන්න...",
             "උපදින හැම ආත්මයකම ඔයාම මගේ වෙන්න කියලා මම පතනවා...",
             "නිදුක් නිරෝගී සතුට පිරුණු ලස්සනම උපන්දිනයක් වේවා මගේ පණ! 🎂❤️"
@@ -94,29 +113,45 @@
         const storyDisplay = document.getElementById("story-display");
         const bgMusic = document.getElementById("bg-music");
         const video = document.getElementById("intro-video");
-        const endingScreen = document.getElementById("ending");
-        let interactionDone = false;
+        const overlay = document.getElementById("starter-overlay");
 
-        document.body.addEventListener("click", function() {
-            if (!interactionDone) {
-                interactionDone = true;
-                bgMusic.play().catch(e => console.log("Music play blocked: ", e));
-                runPresentation();
-            }
-        });
+        const bubbleDeck = document.getElementById("bubble-deck");
+        for (let i = 0; i < 15; i++) {
+            let bubble = document.createElement("div");
+            bubble.className = "heart-bubble";
+            bubble.style.left = Math.random() * 100 + "%";
+            bubble.style.width = bubble.style.height = (Math.random() * 20 + 10) + "px";
+            bubble.style.animationDelay = Math.random() * 5 + "s";
+            bubble.style.animationDuration = (Math.random() * 4 + 4) + "s";
+            bubbleDeck.appendChild(bubble);
+        }
+
+        function startSurprise() {
+            overlay.style.opacity = "0";
+            setTimeout(() => { overlay.style.display = "none"; }, 500);
+            bgMusic.play().catch(e => console.log("Audio play error: ", e));
+            runPresentation();
+        }
 
         function runPresentation() {
             for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
-            slides[currentSlide].style.display = "block";
+            slides[currentSlide].style.display = "flex";
             storyDisplay.innerHTML = loveStory[currentSlide];
+
             storyDisplay.style.animation = 'none';
             storyDisplay.offsetHeight;
             storyDisplay.style.animation = null;
 
             if (currentSlide === 0) {
-                video.currentTime = 0;
-                video.play();
-                video.onended = function() { nextSlide(); };
+                const isVideoPlaying = video.play();
+                if (isVideoPlaying !== undefined) {
+                    isVideoPlaying.then(() => {
+                        video.onended = function() { nextSlide(); };
+                    }).catch(error => {
+                        console.log("Video autoplay blocked");
+                        setTimeout(nextSlide, 5000);
+                    });
+                }
             } else {
                 setTimeout(nextSlide, 5000);
             }
@@ -127,7 +162,7 @@
             if (currentSlide < slides.length) {
                 runPresentation();
             } else {
-                endingScreen.style.display = "flex";
+                document.getElementById("ending").style.display = "flex";
             }
         }
     </script>
