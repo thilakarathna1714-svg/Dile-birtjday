@@ -4,51 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Dile! 🌸✨</title>
+    <!-- Importing Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,500&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body, html { 
             margin: 0; padding: 0; background-color: #fff0f5; 
             display: flex; justify-content: center; align-items: center; 
             height: 100vh; width: 100vw; overflow: hidden; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         }
+        
+        /* Modern Gradient Click Overlay */
         .click-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; cursor: pointer; transition: opacity 0.5s ease;
+            color: white; text-align: center; cursor: pointer; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .click-overlay h2 { font-size: 1.8em; text-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-bottom: 10px; padding: 0 15px; }
-        .click-overlay p { font-size: 1.1em; background: rgba(255,255,255,0.3); padding: 10px 20px; border-radius: 20px; margin: 0 15px; }
-        .bounce-heart { font-size: 4em; animation: bounce 1s infinite alternate; margin-bottom: 15px; }
-        @keyframes bounce { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
+        .click-overlay h2 { font-size: 1.8em; font-weight: 600; text-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 12px; padding: 0 20px; }
+        .click-overlay p { font-size: 1.05em; background: rgba(255,255,255,0.25); padding: 12px 24px; border-radius: 30px; margin: 0 20px; backdrop-filter: blur(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .bounce-heart { font-size: 4.5em; animation: bounce 0.8s infinite alternate; margin-bottom: 20px; }
+        @keyframes bounce { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
 
+        /* Media Presentation Container */
         .media-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; display: flex; justify-content: center; align-items: center; background: #fff5f7; }
         .slide { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; justify-content: center; align-items: center; }
-        .slide img, .slide video { width: 100%; height: 100%; object-fit: contain; filter: contrast(115%) saturate(145%) brightness(102%); }
+        .slide img, .slide video { width: 100%; height: 100%; object-fit: contain; filter: contrast(106%) saturate(125%) brightness(102%); }
 
+        /* Floating Heart Bubbles Animation */
         .floating-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 2; overflow: hidden; }
-        .heart-bubble { position: absolute; bottom: -10%; background: rgba(255, 182, 193, 0.6); border-radius: 50%; animation: floatUp 6s infinite linear; }
-        @keyframes floatUp { 0% { transform: translateY(0) scale(0.5); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-110vh) scale(1.2); opacity: 0; } }
+        .heart-bubble { position: absolute; bottom: -10%; background: rgba(255, 105, 180, 0.45); border-radius: 50%; animation: floatUp 6s infinite linear; display: flex; justify-content: center; align-items: center; color: white; font-size: 12px; }
+        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; } 30% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; } }
 
-        .header-content { position: absolute; top: 5%; display: flex; flex-direction: column; align-items: center; z-index: 3; text-align: center; width: 100%; }
-        .header-card { background: rgba(255, 255, 255, 0.85); padding: 8px 20px; border-radius: 30px; box-shadow: 0 8px 20px rgba(255, 105, 180, 0.15); border: 2px solid #ffb6c1; }
-        h1 { font-size: 1.6em; margin: 0; color: #ff477e; font-weight: 700; }
+        /* Elegant Top Header */
+        .header-content { position: absolute; top: 4%; display: flex; flex-direction: column; align-items: center; z-index: 3; text-align: center; width: 100%; }
+        .header-card { background: rgba(255, 255, 255, 0.88); padding: 10px 25px; border-radius: 30px; box-shadow: 0 10px 25px rgba(255, 105, 180, 0.12); border: 1px solid rgba(255, 182, 193, 0.6); backdrop-filter: blur(8px); }
+        h1 { font-size: 1.5em; margin: 0; color: #d93d6c; font-weight: 600; letter-spacing: 0.5px; }
 
-        .story-container { position: absolute; bottom: 8%; width: 90%; max-width: 600px; text-align: center; z-index: 3; }
-        .story-text { font-size: 1.2em; font-weight: 500; color: #ff477e; line-height: 1.5; background: rgba(255, 255, 255, 0.95); padding: 15px 20px; border-radius: 20px; border: 3px dashed #ffb6c1; box-shadow: 0 10px 25px rgba(255, 105, 180, 0.15); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 100%; }
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        /* Redesigned Story Text Container with Premium Font Styles */
+        .story-container { position: absolute; bottom: 8%; width: 92%; max-width: 550px; text-align: center; z-index: 3; }
+        .story-text { 
+            font-size: 1.15em; 
+            font-weight: 500; 
+            font-style: italic;
+            color: #c92a57; 
+            line-height: 1.6; 
+            background: rgba(255, 255, 255, 0.94); 
+            padding: 18px 25px; 
+            border-radius: 24px; 
+            border: 1px solid rgba(255, 105, 180, 0.25); 
+            box-shadow: 0 12px 30px rgba(233, 30, 99, 0.15); 
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            width: 100%; 
+            letter-spacing: 0.2px;
+        }
+        @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .ending-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); z-index: 4; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .ending-card { background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 3px solid #ffffff; max-width: 85%; }
-        .big-emoji { font-size: 4em; animation: swing 2s infinite ease-in-out; }
-        @keyframes swing { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
-        .thank-you-msg { font-size: 1.6em; font-weight: 700; color: #ff477e; margin-top: 15px; }
+        /* Ending Screen Design */
+        .ending-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); z-index: 4; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .ending-card { background: rgba(255, 255, 255, 0.94); padding: 35px 25px; border-radius: 32px; box-shadow: 0 20px 45px rgba(0,0,0,0.12); border: 1px solid #ffffff; max-width: 85%; backdrop-filter: blur(10px); }
+        .big-emoji { font-size: 4.5em; animation: swing 2.5s infinite ease-in-out; }
+        @keyframes swing { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+        .thank-you-msg { font-size: 1.55em; font-weight: 600; color: #d93d6c; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+    <!-- Calm & Deeply Romantic Soft Acoustic Background Music -->
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" loop></audio>
 
     <div id="starter-overlay" class="click-overlay" onclick="startSurprise()">
         <div class="bounce-heart">💝</div>
@@ -57,7 +80,6 @@
     </div>
 
     <div class="media-container">
-        <!-- Added explicit muted, autoplay, and playsinline to bypass browser restrictions -->
         <div class="slide"><video id="intro-video" src="video_2026-07-06_21-39-03.mp4" muted autoplay playsinline></video></div>
         <div class="slide"><img src="photo_2026-07-06_21-30-29.jpg"></div>
         <div class="slide"><img src="photo_2026-07-06_21-30-30.jpg"></div>
@@ -88,7 +110,7 @@
         <div class="ending-card">
             <div class="big-emoji">🥰👸🌸</div>
             <div class="thank-you-msg">Thank You For Everything, My Love! ❤️</div>
-            <p style="color: #ff7597; font-weight: bold; margin-top: 10px;">උපන්දිනයක් වේවා මගේ පණ! 🎂</p>
+            <p style="color: #ff6384; font-weight: 600; margin-top: 10px; font-size: 1.1em;">උපන්දිනයක් වේවා මගේ පණ! 🎂</p>
         </div>
     </div>
 
@@ -103,7 +125,7 @@
             "මගේ හුස්ම වැටෙන හැම වාරයක් පාසාම මම ඔයාවම පතනවා...",
             "අපි ආපු මේ දුර දිහා බලද්දී හිතට දැනෙන්නේ පුදුමාකාර සතුටක්...",
             "ඔයා නැති ලෝකයක් ගැන මට හිතන්නවත් බැරි තරම් ඔයා මගේ වෙලා...",
-            "හැමදාම ඔහොම මගේම වෙලා මගේ හෙවනැල්ල වගේ ළඟින් ඉන්න...",
+            "හැමදාම ඔහොම මගේම වෙලා මගේ hෙවනැල්ල වගේ ළඟින් ඉන්න...",
             "උපදින හැම ආත්මයකම ඔයාම මගේ වෙන්න කියලා මම පතනවා...",
             "නිදුක් නිරෝගී සතුට පිරුණු ලස්සනම උපන්දිනයක් වේවා මගේ පණ! 🎂❤️"
         ];
@@ -116,22 +138,24 @@
         const video = document.getElementById("intro-video");
         const overlay = document.getElementById("starter-overlay");
 
-        // Generate floating hearts
+        // Generate customized floating heart bubbles
         const bubbleDeck = document.getElementById("bubble-deck");
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 20; i++) {
             let bubble = document.createElement("div");
             bubble.className = "heart-bubble";
+            bubble.innerHTML = "❤";
             bubble.style.left = Math.random() * 100 + "%";
-            bubble.style.width = bubble.style.height = (Math.random() * 20 + 10) + "px";
-            bubble.style.animationDelay = Math.random() * 5 + "s";
-            bubble.style.animationDuration = (Math.random() * 4 + 4) + "s";
+            bubble.style.fontSize = (Math.random() * 12 + 8) + "px";
+            bubble.style.animationDelay = Math.random() * 6 + "s";
+            bubble.style.animationDuration = (Math.random() * 5 + 4) + "s";
             bubbleDeck.appendChild(bubble);
         }
 
         function startSurprise() {
             overlay.style.opacity = "0";
-            setTimeout(() => { overlay.style.display = "none"; }, 500);
-            bgMusic.play().catch(e => console.log("Audio playing required interaction first."));
+            setTimeout(() => { overlay.style.display = "none"; }, 600);
+            bgMusic.volume = 0.85; // Set smooth volume
+            bgMusic.play().catch(e => console.log("Audio playing requires interaction first."));
             runPresentation();
         }
 
@@ -145,12 +169,9 @@
             storyDisplay.style.animation = null;
 
             if (currentSlide === 0) {
-                // Ensure video attempts to play immediately
                 video.currentTime = 0;
                 const playPromise = video.play();
-                
-                // Set a fail-safe timer (6 seconds) so if the video stalls, it forces transition to photo1
-                slideTimeout = setTimeout(nextSlide, 6000);
+                slideTimeout = setTimeout(nextSlide, 6000); // Fail-safe timer
 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
@@ -159,11 +180,11 @@
                             nextSlide();
                         };
                     }).catch(error => {
-                        console.log("Autoplay caught, handled by safety timer.");
+                        console.log("Autoplay handled by safety timer.");
                     });
                 }
             } else {
-                slideTimeout = setTimeout(nextSlide, 5000);
+                slideTimeout = setTimeout(nextSlide, 5200);
             }
         }
 
