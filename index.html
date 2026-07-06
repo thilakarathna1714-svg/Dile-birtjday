@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Dile! 🌸✨</title>
-    <!-- Premium Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,500&display=swap" rel="stylesheet">
+    <!-- Premium Font Family -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body, html { 
@@ -19,44 +19,78 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; cursor: pointer; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            color: white; text-align: center; cursor: pointer; transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .click-overlay h2 { font-size: 1.8em; font-weight: 600; text-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 12px; padding: 0 20px; }
+        .click-overlay h2 { font-size: 1.8em; font-weight: 700; text-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 12px; padding: 0 20px; }
         .click-overlay p { font-size: 1.05em; background: rgba(255,255,255,0.25); padding: 12px 24px; border-radius: 30px; margin: 0 20px; backdrop-filter: blur(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .bounce-heart { font-size: 4.5em; animation: bounce 0.8s infinite alternate; margin-bottom: 20px; }
         @keyframes bounce { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
 
         /* Media Presentation Container */
         .media-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; display: flex; justify-content: center; align-items: center; background: #fff5f7; }
-        .slide { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; justify-content: center; align-items: center; }
-        .slide img, .slide video { width: 100%; height: 100%; object-fit: contain; filter: contrast(106%) saturate(125%) brightness(102%); }
+        
+        /* Heart-touching Transition Fade Style */
+        .slide { 
+            display: none; 
+            width: 100%; 
+            height: 100%; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            justify-content: center; 
+            align-items: center; 
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out; /* Smooth transition */
+            overflow: hidden;
+        }
+        .slide.active { display: flex; opacity: 1; }
 
-        /* Floating Heart Bubbles Animation */
+        /* Cinematic Slow Zoom & Romantic Soft Shake Effects */
+        .slide img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            filter: contrast(106%) saturate(125%) brightness(102%);
+            transform: scale(1);
+        }
+        .slide.active img {
+            animation: romanticMotion 7s ease-in-out infinite alternate;
+        }
+
+        /* Video formatting */
+        .slide video { width: 100%; height: 100%; object-fit: contain; }
+
+        @keyframes romanticMotion {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.06) rotate(0.5deg); } /* Slow Zoom & Tiny Shake */
+            100% { transform: scale(1.11) rotate(-0.5deg); }
+        }
+
+        /* Floating Heart Bubbles */
         .floating-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 2; overflow: hidden; }
         .heart-bubble { position: absolute; bottom: -10%; background: rgba(255, 105, 180, 0.45); border-radius: 50%; animation: floatUp 6s infinite linear; display: flex; justify-content: center; align-items: center; color: white; font-size: 12px; }
         @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; } 30% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; } }
 
-        /* Elegant Top Header */
+        /* Top Header */
         .header-content { position: absolute; top: 4%; display: flex; flex-direction: column; align-items: center; z-index: 3; text-align: center; width: 100%; }
         .header-card { background: rgba(255, 255, 255, 0.88); padding: 10px 25px; border-radius: 30px; box-shadow: 0 10px 25px rgba(255, 105, 180, 0.12); border: 1px solid rgba(255, 182, 193, 0.6); backdrop-filter: blur(8px); }
-        h1 { font-size: 1.5em; margin: 0; color: #d93d6c; font-weight: 600; letter-spacing: 0.5px; }
+        h1 { font-size: 1.5em; margin: 0; color: #d93d6c; font-weight: 700; letter-spacing: 0.5px; }
 
-        /* Redesigned Story Text Container */
-        .story-container { position: absolute; bottom: 8%; width: 92%; max-width: 550px; text-align: center; z-index: 3; }
+        /* Bold & Beautifully Highlighted Story Text Box */
+        .story-container { position: absolute; bottom: 8%; width: 92%; max-width: 580px; text-align: center; z-index: 3; }
         .story-text { 
-            font-size: 1.15em; 
-            font-weight: 500; 
-            font-style: italic;
-            color: #c92a57; 
+            font-size: 1.25em; 
+            font-weight: 700; /* Bold text style */
+            color: #b51a44; 
             line-height: 1.6; 
-            background: rgba(255, 255, 255, 0.94); 
-            padding: 18px 25px; 
+            background: rgba(255, 255, 255, 0.96); 
+            padding: 20px 28px; 
             border-radius: 24px; 
-            border: 1px solid rgba(255, 105, 180, 0.25); 
-            box-shadow: 0 12px 30px rgba(233, 30, 99, 0.15); 
+            border-left: 6px solid #ff477e; /* Elegant edge accent */
+            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.18); 
             animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             width: 100%; 
-            letter-spacing: 0.2px;
+            letter-spacing: 0.3px;
         }
         @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
@@ -65,7 +99,7 @@
         .ending-card { background: rgba(255, 255, 255, 0.94); padding: 35px 25px; border-radius: 32px; box-shadow: 0 20px 45px rgba(0,0,0,0.12); border: 1px solid #ffffff; max-width: 85%; backdrop-filter: blur(10px); }
         .big-emoji { font-size: 4.5em; animation: swing 2.5s infinite ease-in-out; }
         @keyframes swing { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
-        .thank-you-msg { font-size: 1.55em; font-weight: 600; color: #d93d6c; margin-top: 15px; }
+        .thank-you-msg { font-size: 1.6em; font-weight: 700; color: #d93d6c; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -110,7 +144,7 @@
         <div class="ending-card">
             <div class="big-emoji">🥰👸🌸</div>
             <div class="thank-you-msg">Thank You For Everything, My Love! ❤️</div>
-            <p style="color: #ff6384; font-weight: 600; margin-top: 10px; font-size: 1.1em;">උපන්දිනයක් වේවා මගේ පණ! 🎂</p>
+            <p style="color: #ff6384; font-weight: 700; margin-top: 10px; font-size: 1.15em;">උපන්දිනයක් වේවා Mගේ පණ! 🎂</p>
         </div>
     </div>
 
@@ -122,7 +156,7 @@
             "ජීවිතේ මට ලැබුණු වටිනාම සහ ලස්සනම තෑග්ග ඔයා විතරයි, Dile...",
             "ඔයා මගේ ළඟින් ඉන්න හැම තත්පරයක්ම මට මාරම විශේෂයි...",
             "කවදාවත් කාටවත්ම වෙනස් කරන්න බැරි තරම් මම ඔයාට ආදරෙයි...",
-            "මගේ hුස්ම වැටෙන හැම වාරයක් පාසාම මම ඔයාවම පතනවා...",
+            "මගේ හුස්ම වැටෙන හැම වාරයක් පාසාම මම ඔයාවම පතනවා...",
             "අපි ආපු මේ දුර දිහා බලද්දී හිතට දැනෙන්නේ පුදුමාකාර සතුටක්...",
             "ඔයා නැති ලෝකයක් ගැන මට හිතන්නවත් බැරි තරම් ඔයා මගේ වෙලා...",
             "හැමදාම ඔහොම මගේම වෙලා මගේ හෙවනැල්ල වගේ ළඟින් ඉන්න...",
@@ -138,7 +172,7 @@
         const video = document.getElementById("intro-video");
         const overlay = document.getElementById("starter-overlay");
 
-        // Floating heart bubbles
+        // Floating hearts
         const bubbleDeck = document.getElementById("bubble-deck");
         for (let i = 0; i < 20; i++) {
             let bubble = document.createElement("div");
@@ -154,16 +188,20 @@
         function startSurprise() {
             overlay.style.opacity = "0";
             setTimeout(() => { overlay.style.display = "none"; }, 600);
-            bgMusic.volume = 0.90; // Premium audio volume
-            bgMusic.play().catch(e => console.log("Audio play allowed after click."));
+            bgMusic.volume = 0.95; 
+            bgMusic.play().catch(e => console.log("Audio started."));
             runPresentation();
         }
 
         function runPresentation() {
-            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
-            slides[currentSlide].style.display = "flex";
+            for (let i = 0; i < slides.length; i++) { 
+                slides[i].classList.remove("active"); 
+            }
+            
+            slides[currentSlide].classList.add("active");
             storyDisplay.innerHTML = loveStory[currentSlide];
 
+            // Re-trigger text popIn animation
             storyDisplay.style.animation = 'none';
             storyDisplay.offsetHeight; 
             storyDisplay.style.animation = null;
@@ -171,7 +209,7 @@
             if (currentSlide === 0) {
                 video.currentTime = 0;
                 const playPromise = video.play();
-                slideTimeout = setTimeout(nextSlide, 6000); // Safety transition
+                slideTimeout = setTimeout(nextSlide, 6500); // Fail-safe transition for intro
 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
@@ -184,7 +222,7 @@
                     });
                 }
             } else {
-                slideTimeout = setTimeout(nextSlide, 5200);
+                slideTimeout = setTimeout(nextSlide, 5500); // Beautiful 5.5s display time per photo
             }
         }
 
