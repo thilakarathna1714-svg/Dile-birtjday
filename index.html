@@ -41,7 +41,7 @@
         .header-card { background: rgba(255, 255, 255, 0.88); padding: 10px 25px; border-radius: 30px; box-shadow: 0 10px 25px rgba(255, 105, 180, 0.12); border: 1px solid rgba(255, 182, 193, 0.6); backdrop-filter: blur(8px); }
         h1 { font-size: 1.5em; margin: 0; color: #d93d6c; font-weight: 600; letter-spacing: 0.5px; }
 
-        /* Story Text Container */
+        /* Redesigned Story Text Container */
         .story-container { position: absolute; bottom: 8%; width: 92%; max-width: 550px; text-align: center; z-index: 3; }
         .story-text { 
             font-size: 1.15em; 
@@ -70,8 +70,8 @@
 </head>
 <body>
 
-    <!-- Super Slow, Calm & Deeply Romantic Piano Track (Beautiful In White Piano Instrumental) -->
-    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" loop></audio>
+    <!-- Link to your own uploaded mp3 file -->
+    <audio id="bg-music" src="romantic.mp3" loop></audio>
 
     <div id="starter-overlay" class="click-overlay" onclick="startSurprise()">
         <div class="bounce-heart">💝</div>
@@ -122,8 +122,8 @@
             "ජීවිතේ මට ලැබුණු වටිනාම සහ ලස්සනම තෑග්ග ඔයා විතරයි, Dile...",
             "ඔයා මගේ ළඟින් ඉන්න හැම තත්පරයක්ම මට මාරම විශේෂයි...",
             "කවදාවත් කාටවත්ම වෙනස් කරන්න බැරි තරම් මම ඔයාට ආදරෙයි...",
-            "මගේ හුස්ම වැටෙන හැම වාරයක් පාසාම මම ඔයාවම පතනවා...",
-            "අපි ආපු මේ දුර දිහා බලද්දී hිතට දැනෙන්නේ පුදුමාකාර සතුටක්...",
+            "මගේ hුස්ම වැටෙන හැම වාරයක් පාසාම මම ඔයාවම පතනවා...",
+            "අපි ආපු මේ දුර දිහා බලද්දී හිතට දැනෙන්නේ පුදුමාකාර සතුටක්...",
             "ඔයා නැති ලෝකයක් ගැන මට හිතන්නවත් බැරි තරම් ඔයා මගේ වෙලා...",
             "හැමදාම ඔහොම මගේම වෙලා මගේ හෙවනැල්ල වගේ ළඟින් ඉන්න...",
             "උපදින හැම ආත්මයකම ඔයාම මගේ වෙන්න කියලා මම පතනවා...",
@@ -138,7 +138,7 @@
         const video = document.getElementById("intro-video");
         const overlay = document.getElementById("starter-overlay");
 
-        // Floating hearts
+        // Floating heart bubbles
         const bubbleDeck = document.getElementById("bubble-deck");
         for (let i = 0; i < 20; i++) {
             let bubble = document.createElement("div");
@@ -154,8 +154,8 @@
         function startSurprise() {
             overlay.style.opacity = "0";
             setTimeout(() => { overlay.style.display = "none"; }, 600);
-            bgMusic.volume = 0.80; 
-            bgMusic.play().catch(e => console.log("Audio play error."));
+            bgMusic.volume = 0.90; // Premium audio volume
+            bgMusic.play().catch(e => console.log("Audio play allowed after click."));
             runPresentation();
         }
 
@@ -171,7 +171,7 @@
             if (currentSlide === 0) {
                 video.currentTime = 0;
                 const playPromise = video.play();
-                slideTimeout = setTimeout(nextSlide, 6000); // Fail-safe
+                slideTimeout = setTimeout(nextSlide, 6000); // Safety transition
 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
@@ -180,7 +180,7 @@
                             nextSlide();
                         };
                     }).catch(error => {
-                        console.log("Autoplay caught.");
+                        console.log("Autoplay handled.");
                     });
                 }
             } else {
