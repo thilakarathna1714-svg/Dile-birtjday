@@ -57,8 +57,8 @@
     </div>
 
     <div class="media-container">
-        <!-- Exactly mapped with your real GitHub file names -->
-        <div class="slide"><video id="intro-video" src="video_2026-07-06_21-39-03.mp4" muted playsinline></video></div>
+        <!-- Added explicit muted, autoplay, and playsinline to bypass browser restrictions -->
+        <div class="slide"><video id="intro-video" src="video_2026-07-06_21-39-03.mp4" muted autoplay playsinline></video></div>
         <div class="slide"><img src="photo_2026-07-06_21-30-29.jpg"></div>
         <div class="slide"><img src="photo_2026-07-06_21-30-30.jpg"></div>
         <div class="slide"><img src="photo_2026-07-06_21-30-31.jpg"></div>
@@ -95,26 +95,28 @@
     <script>
         const loveStory = [
             "मुළු ලෝකයම නිහඬ වුණු මොහොතක, ඔයා මගේ ජීවිතයට ආවා... ✨",
-            "ඔයාගේ ඔය ලස්සන hිනාව තමයි මගේ හැම දවසකම සතුට...",
+            "ඔයාගේ ඔය ලස්සන හිනාව තමයි මගේ හැම දවසකම සතුට...",
             "සෑම පින්තූරයකම තියෙන්නේ අපි එකතු කරපු ආදරණීය මතකයන්...",
             "ජීවිතේ මට ලැබුණු වටිනාම සහ ලස්සනම තෑග්ග ඔයා විතරයි, Dile...",
             "ඔයා මගේ ළඟින් ඉන්න හැම තත්පරයක්ම මට මාරම විශේෂයි...",
             "කවදාවත් කාටවත්ම වෙනස් කරන්න බැරි තරම් මම ඔයාට ආදරෙයි...",
             "මගේ හුස්ම වැටෙන හැම වාරයක් පාසාම මම ඔයාවම පතනවා...",
             "අපි ආපු මේ දුර දිහා බලද්දී හිතට දැනෙන්නේ පුදුමාකාර සතුටක්...",
-            "ඔයා නැති ලෝකයක් ගැන මට hිතන්නවත් බැරි තරම් ඔයා මගේ වෙලා...",
+            "ඔයා නැති ලෝකයක් ගැන මට හිතන්නවත් බැරි තරම් ඔයා මගේ වෙලා...",
             "හැමදාම ඔහොම මගේම වෙලා මගේ හෙවනැල්ල වගේ ළඟින් ඉන්න...",
             "උපදින හැම ආත්මයකම ඔයාම මගේ වෙන්න කියලා මම පතනවා...",
             "නිදුක් නිරෝගී සතුට පිරුණු ලස්සනම උපන්දිනයක් වේවා මගේ පණ! 🎂❤️"
         ];
 
         let currentSlide = 0;
+        let slideTimeout;
         const slides = document.getElementsByClassName("slide");
         const storyDisplay = document.getElementById("story-display");
         const bgMusic = document.getElementById("bg-music");
         const video = document.getElementById("intro-video");
         const overlay = document.getElementById("starter-overlay");
 
+        // Generate floating hearts
         const bubbleDeck = document.getElementById("bubble-deck");
         for (let i = 0; i < 15; i++) {
             let bubble = document.createElement("div");
@@ -129,7 +131,7 @@
         function startSurprise() {
             overlay.style.opacity = "0";
             setTimeout(() => { overlay.style.display = "none"; }, 500);
-            bgMusic.play().catch(e => console.log("Audio play error: ", e));
+            bgMusic.play().catch(e => console.log("Audio playing required interaction first."));
             runPresentation();
         }
 
@@ -139,25 +141,34 @@
             storyDisplay.innerHTML = loveStory[currentSlide];
 
             storyDisplay.style.animation = 'none';
-            storyDisplay.offsetHeight;
+            storyDisplay.offsetHeight; // trigger reflow
             storyDisplay.style.animation = null;
 
             if (currentSlide === 0) {
-                const isVideoPlaying = video.play();
-                if (isVideoPlaying !== undefined) {
-                    isVideoPlaying.then(() => {
-                        video.onended = function() { nextSlide(); };
+                // Ensure video attempts to play immediately
+                video.currentTime = 0;
+                const playPromise = video.play();
+                
+                // Set a fail-safe timer (6 seconds) so if the video stalls, it forces transition to photo1
+                slideTimeout = setTimeout(nextSlide, 6000);
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        video.onended = function() {
+                            clearTimeout(slideTimeout);
+                            nextSlide();
+                        };
                     }).catch(error => {
-                        console.log("Video autoplay blocked");
-                        setTimeout(nextSlide, 5000);
+                        console.log("Autoplay caught, handled by safety timer.");
                     });
                 }
             } else {
-                setTimeout(nextSlide, 5000);
+                slideTimeout = setTimeout(nextSlide, 5000);
             }
         }
 
         function nextSlide() {
+            clearTimeout(slideTimeout);
             currentSlide++;
             if (currentSlide < slides.length) {
                 runPresentation();
