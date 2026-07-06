@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Dile! 🌸✨</title>
-    <!-- Importing Premium Google Fonts -->
+    <!-- Premium Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,500&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -41,7 +41,7 @@
         .header-card { background: rgba(255, 255, 255, 0.88); padding: 10px 25px; border-radius: 30px; box-shadow: 0 10px 25px rgba(255, 105, 180, 0.12); border: 1px solid rgba(255, 182, 193, 0.6); backdrop-filter: blur(8px); }
         h1 { font-size: 1.5em; margin: 0; color: #d93d6c; font-weight: 600; letter-spacing: 0.5px; }
 
-        /* Redesigned Story Text Container with Premium Font Styles */
+        /* Story Text Container */
         .story-container { position: absolute; bottom: 8%; width: 92%; max-width: 550px; text-align: center; z-index: 3; }
         .story-text { 
             font-size: 1.15em; 
@@ -70,8 +70,8 @@
 </head>
 <body>
 
-    <!-- Calm & Deeply Romantic Soft Acoustic Background Music -->
-    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" loop></audio>
+    <!-- Super Slow, Calm & Deeply Romantic Piano Track (Beautiful In White Piano Instrumental) -->
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" loop></audio>
 
     <div id="starter-overlay" class="click-overlay" onclick="startSurprise()">
         <div class="bounce-heart">💝</div>
@@ -123,9 +123,9 @@
             "ඔයා මගේ ළඟින් ඉන්න හැම තත්පරයක්ම මට මාරම විශේෂයි...",
             "කවදාවත් කාටවත්ම වෙනස් කරන්න බැරි තරම් මම ඔයාට ආදරෙයි...",
             "මගේ හුස්ම වැටෙන හැම වාරයක් පාසාම මම ඔයාවම පතනවා...",
-            "අපි ආපු මේ දුර දිහා බලද්දී හිතට දැනෙන්නේ පුදුමාකාර සතුටක්...",
+            "අපි ආපු මේ දුර දිහා බලද්දී hිතට දැනෙන්නේ පුදුමාකාර සතුටක්...",
             "ඔයා නැති ලෝකයක් ගැන මට හිතන්නවත් බැරි තරම් ඔයා මගේ වෙලා...",
-            "හැමදාම ඔහොම මගේම වෙලා මගේ hෙවනැල්ල වගේ ළඟින් ඉන්න...",
+            "හැමදාම ඔහොම මගේම වෙලා මගේ හෙවනැල්ල වගේ ළඟින් ඉන්න...",
             "උපදින හැම ආත්මයකම ඔයාම මගේ වෙන්න කියලා මම පතනවා...",
             "නිදුක් නිරෝගී සතුට පිරුණු ලස්සනම උපන්දිනයක් වේවා මගේ පණ! 🎂❤️"
         ];
@@ -138,7 +138,7 @@
         const video = document.getElementById("intro-video");
         const overlay = document.getElementById("starter-overlay");
 
-        // Generate customized floating heart bubbles
+        // Floating hearts
         const bubbleDeck = document.getElementById("bubble-deck");
         for (let i = 0; i < 20; i++) {
             let bubble = document.createElement("div");
@@ -154,8 +154,8 @@
         function startSurprise() {
             overlay.style.opacity = "0";
             setTimeout(() => { overlay.style.display = "none"; }, 600);
-            bgMusic.volume = 0.85; // Set smooth volume
-            bgMusic.play().catch(e => console.log("Audio playing requires interaction first."));
+            bgMusic.volume = 0.80; 
+            bgMusic.play().catch(e => console.log("Audio play error."));
             runPresentation();
         }
 
@@ -165,13 +165,13 @@
             storyDisplay.innerHTML = loveStory[currentSlide];
 
             storyDisplay.style.animation = 'none';
-            storyDisplay.offsetHeight; // trigger reflow
+            storyDisplay.offsetHeight; 
             storyDisplay.style.animation = null;
 
             if (currentSlide === 0) {
                 video.currentTime = 0;
                 const playPromise = video.play();
-                slideTimeout = setTimeout(nextSlide, 6000); // Fail-safe timer
+                slideTimeout = setTimeout(nextSlide, 6000); // Fail-safe
 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
@@ -180,7 +180,7 @@
                             nextSlide();
                         };
                     }).catch(error => {
-                        console.log("Autoplay handled by safety timer.");
+                        console.log("Autoplay caught.");
                     });
                 }
             } else {
